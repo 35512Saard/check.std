@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LINE Notify Callback</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        #result {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="result">
+        <h2>การตอบกลับของ LINE Notify</h2>
+        <p id="message">กำลังโหลด...</p>
+    </div>
+
+    <script>
+        function getQueryParams() {
+            var params = {};
+            window.location.search.substring(1).split('&').forEach(function(pair) {
+                var [key, value] = pair.split('=');
+                params[key] = decodeURIComponent(value);
+            });
+            return params;
+        }
+
+        var params = getQueryParams();
+        var message = '';
+
+        if (params.code) {
+            message = 'Authorization Code: ' + params.code;
+        } else if (params.error) {
+            message = 'Error: ' + params.error;
+        } else {
+            message = 'No authorization code or error received.';
+        }
+
+        document.getElementById('message').textContent = message;
+    </script>
+</body>
+</html>
